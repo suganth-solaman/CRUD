@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% extends 'home.html' %}
+
+{% block mymessage %}
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li  {% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+{% if request.path == "/register" %}
+  <div class="boxing">
+<form method="post">
+    <div class="form-group">
+    <label for="nameinput">Name</label>
+    <input name="name" type="text" class="form-control" id="nameinput" aria-describedby="emailHelp" placeholder="Enter name">
+  </div>
+
+  <div class="form-group">
+    <label for="exampleInputEmail1">Email address</label>
+    <input name="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+  </div>
+
+  <div class="form-group">
+    <label for="exampleInputPassword1">Password1</label>
+    <input name="pass1" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+  </div>
+
+    <div class="form-group">
+    <label for="exampleInputPassword2">Password2</label>
+    <input name="pass2" type="password" class="form-control" id="exampleInputPassword2" placeholder="Password2">
+  </div>
+
+    <div class="form-group">
+    <label for="profile">profile</label>
+    <input name="profile" type="text" class="form-control" id="profile" placeholder="image link / path">
+  </div>
+
+
+  <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    </div>
+{%else%}
+  <div class="boxing">
+<form method="post">
+    <div class="form-group">
+    <label for="nameinput">Name</label>
+    <input value="{{request.user.username}}" name="name" type="text" class="form-control" id="nameinput" aria-describedby="emailHelp" placeholder="Enter name">
+  </div>
+
+  <div class="form-group">
+    <label for="exampleInputEmail1">Email address</label>
+    <input value="{{request.user.email}}" name="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+  </div>
+
+
+    <div class="form-group">
+    <label for="profile">profile</label>
+    <input value="{{request.user.profile}}" name="profile" type="text" class="form-control" id="profile" placeholder="image link / path">
+  </div>
+
+
+  <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    </div>
+
+{% endif %}
+{% endblock %}
+</body>
+</html>

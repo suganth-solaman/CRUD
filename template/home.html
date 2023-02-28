@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+</head>
+
+<style>
+    .boxing{
+        width: 50%;
+        margin: auto;
+        padding: 20px;
+    }
+</style>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Hi, {{request.user.username}}</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+
+    <ul class="navbar-nav">
+        <li class="nav-item active">
+        <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
+      </li>
+
+      <li class="nav-item active">
+          <a href="{% url 'register' %}" class="btn btn-primary">signup</a>
+      </li>
+
+        <li class="nav-item active">
+          <a href="{% url 'login_pro' %}" class="btn btn-primary">login</a>
+      </li>
+
+        <li class="nav-item active">
+          <a href="{% url 'signout' %}" class="btn btn-danger">signout</a>
+      </li>
+
+    </ul>
+
+  </div>
+</nav>
+{% block mymessage %}
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li  {% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+{% if request.user.is_authenticated %}
+ <div class="boxing">
+
+     <div class="card" style="width: 18rem;">
+  <img class="card-img-top" src="{{request.user.profile}}" alt="Card image cap">
+  <div class="card-body">
+    <h5 class="card-title">Name : {{request.user.username}}</h5>
+    <p class="card-text">Email : {{request.user.email}}</p>
+    <a href="{% url 'edit' request.user.id %}" class="btn btn-primary">Edit</a>  <a href="{% url 'delete' request.user.id %}" class="btn btn-danger">Delete</a>
+  </div>
+</div>
+ </div>
+
+{% else %}
+ <div class="boxing">
+        <div class="card" style="width: 18rem;">
+
+<a href="{% url 'login_pro' %}" class="btn btn-primary">login</a>
+            <h6>if you dont have account signin </h6>
+            </div>
+</div>
+{% endif %}
+
+
+{% endblock %}
+
+</body>
+</html>
